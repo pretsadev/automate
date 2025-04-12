@@ -1,0 +1,37 @@
+hooks:
+  script:
+    before:
+      - run: |
+          ansible-galaxy collection build --force pretsa/automate
+        verbose: true
+        filter:
+          includes: ['checksum']
+      - run: |
+          ansible-galaxy collection publish pretsa-automate-{{projectVersion}}.tar.gz --api-key={{Env.GALAXY_API_KEY}}
+        condition: '"{{ Env.CI }}" == true'
+        verbose: true
+        filter:
+          includes: ['release']
+
+project:
+  name: PRETSA automate
+  description: PRETSA ansible automations
+  links:
+    homepage: https://github.com/pretsadev/automate
+  authors:
+    - PRETSA
+  license: MIT
+  inceptionYear: 2025
+
+release:
+  github:
+    overwrite: false
+    changelog:
+      formatted: ALWAYS
+      preset: conventional-commits
+      contributors:
+        format: '- {{contributorName}}{{#contributorUsernameAsLink}} ({{.}}){{/contributorUsernameAsLink}}'
+
+files:
+  globs:
+    - pattern: pretsa-automate-*.tar.gz

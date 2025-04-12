@@ -1,5 +1,6 @@
 .idea
-*/**/*.tar.gz
+*.tar.gz
 /bin/
 /workspace/
-/pretsa/automate/build-install.sh
+/out/
+/.ansible/
