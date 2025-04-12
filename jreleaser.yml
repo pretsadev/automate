@@ -1,18 +1,3 @@
-hooks:
-  script:
-    before:
-      - run: |
-          ansible-galaxy collection build --force pretsa/automate
-        verbose: true
-        filter:
-          includes: ['checksum']
-      - run: |
-          ansible-galaxy collection publish pretsa-automate-{{projectVersion}}.tar.gz --api-key={{Env.GALAXY_API_KEY}}
-        condition: '"{{ Env.CI }}" == true'
-        verbose: true
-        filter:
-          includes: ['release']
-
 project:
   name: PRETSA automate
   description: PRETSA ansible automations

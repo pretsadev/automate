@@ -17,17 +17,21 @@ jobs:
         run: |
           sed -i -e "s/^version:.*/version: ${{ github.event.inputs.version }}/g" pretsa/automate/galaxy.yml
 
+      - name: Build & publish collection
+        run: |
+          ansible-galaxy collection build --force pretsa/automate
+          ansible-galaxy collection publish pretsa-automate-${{ github.event.inputs.version }}.tar.gz --api-key=${{ secrets.GALAXY_API_KEY }}
+
       - name: Release
         uses: jreleaser/release-action@v2
         env:
           JRELEASER_PROJECT_VERSION: ${{ github.event.inputs.version }}
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GALAXY_API_KEY: ${{ secrets.GALAXY_API_KEY }}
 
       - name: Commit version
         run: |
           git add pretsa/automate/galaxy.yml
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Action"
-          git commit -a -m "Releasing PRETSA automate version ${{ github.event.inputs.version }}"
+          git commit -a -m "Releasing version ${{ github.event.inputs.version }}"
           git push origin main
