@@ -1,0 +1,20 @@
+---
+- name: allow access to ports using firewalld
+  ansible.posix.firewalld:
+    port: "{{ item.port }}/{{ item.protocol }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  when: firewall_allow_ports is defined
+  loop: "{{ firewall_allow_ports }}"
+  notify: firewall_firewalld_reload
+
+- name: allow access from networks using firewalld
+  community.general.ufw:
+    source: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  when: firewall_allow_networks is defined
+  loop: "{{ firewall_allow_networks }}"
+  notify: firewall_firewalld_reload

@@ -1,0 +1,8 @@
+---
+- name: configure firewalld firewall using firewalld
+  import_tasks: firewalld.yml
+  when: ansible_facts['os_family']|lower == 'redhat'
+
+- name: configure ufw firewall using ufw
+  import_tasks: ufw.yml
+  when: ansible_facts['os_family']|lower == 'debian'

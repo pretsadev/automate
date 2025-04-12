@@ -1,0 +1,19 @@
+---
+- name: create user
+  ansible.builtin.user:
+    name: "{{ item.user_name }}"
+    password: "{{ item.user_password }}"
+    shell: "{{ item.user_shell | default(default_user_shell) }}"
+    groups: "{{ item.user_groups | default(default_user_groups) }}"
+  loop: "{{ users }}"
+  loop_control:
+    label: "{{ item.user_name }}"
+
+- name: add authorized keys
+  ansible.builtin.include_tasks:
+    file: authorized_key.yml
+  when: user.user_public_keys is defined
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: "{{ user.user_name }}"

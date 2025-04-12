@@ -1,0 +1,8 @@
+---
+- name: firewall_ufw_reload
+  community.general.ufw:
+    state: reloaded
+
+- name: firewall_firewalld_reload
+  community.general.ufw:
+    state: reloaded

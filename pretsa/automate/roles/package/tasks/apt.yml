@@ -1,0 +1,13 @@
+- name: add package gpg key using apt - {{ package_id }}
+  ansible.builtin.apt_key:
+    url: "{{ package_apt_gpg_key_url }}"
+    state: present
+    keyring: /etc/apt/keyrings/{{ package_id }}.gpg
+  when: package_add_repo | bool
+
+- name: add package repository using apt - {{ package_id }}
+  ansible.builtin.apt_repository:
+    filename: "{{ package_id }}"
+    repo: deb [signed-by=/etc/apt/keyrings/{{ package_id }}.gpg] {{ package_apt_repo_url }} {{ ansible_lsb.codename | lower }} stable
+    state: present
+  when: package_add_repo | bool

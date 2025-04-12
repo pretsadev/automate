@@ -1,0 +1,24 @@
+---
+- name: enable ufw and deny all incoming
+  community.general.ufw:
+    state: enabled
+    direction: incoming
+    default: deny
+  notify: firewall_ufw_reload
+
+- name: allow access to ports using ufw
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.protocol }}"
+  when: firewall_allow_ports is defined
+  loop: "{{ firewall_allow_ports }}"
+  notify: firewall_ufw_reload
+
+- name: allow access from networks using ufw
+  community.general.ufw:
+    rule: allow
+    src: "{{ item }}"
+  when: firewall_allow_networks is defined
+  loop: "{{ firewall_allow_networks }}"
+  notify: firewall_ufw_reload

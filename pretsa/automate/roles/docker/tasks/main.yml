@@ -1,0 +1,37 @@
+---
+- name: install docker
+  ansible.builtin.import_role:
+    name: package
+  vars:
+    package_id: docker
+    package_add_repo: true
+    package_apt_gpg_key_url: https://download.docker.com/linux/ubuntu/gpg
+    package_apt_repo_url: https://download.docker.com/linux/ubuntu
+    package_yum_gpg_key_url: https://download.docker.com/linux/rhel/gpg
+    package_yum_repo_url: https://download.docker.com/linux/rhel/$releasever/$basearch/stable
+    package_name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+  notify: docker_restart_service
+
+- name: create override directory
+  ansible.builtin.file:
+    path: /etc/systemd/system/docker.service.d/
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  when: docker_api_expose | bool
+
+- name: copy override config file
+  ansible.builtin.template:
+    src: docker-override.conf.j2
+    dest: /etc/systemd/system/docker.service.d/override.conf
+    owner: root
+    group: root
+    mode: '0644'
+  when: docker_api_expose | bool
+  notify: docker_restart_service

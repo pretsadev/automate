@@ -1,0 +1,25 @@
+namespace: pretsa
+name: automate
+version: 0.0.1
+readme: README.md
+description: PRETSA ansible automations
+authors:
+  - PRETSA <contact@pretsa.dev>
+license:
+  - MIT
+tags:
+  - package
+  - docker
+  - fail2ban
+  - user
+  - netbird
+
+dependencies:
+  community.general: '>=10.0.0'
+
+repository: https://github.com/pretsadev/automate
+documentation: https://github.com/pretsadev/automate
+homepage: https://github.com/pretsadev/automate
+issues: https://github.com/pretsadev/automate/issues
+
+build_ignore: []

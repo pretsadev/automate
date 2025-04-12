@@ -1,0 +1,20 @@
+---
+- name: install docker
+  ansible.builtin.import_role:
+    name: package
+  vars:
+    package_id: fail2ban
+    package_yum_prerequisite:
+      - epel-release
+    package_name:
+      - fail2ban
+  notify: fail2ban_restart_service
+
+- name: copy fail2ban configuration file
+  ansible.builtin.template:
+    src: sshd.conf.j2
+    dest: /etc/fail2ban/jail.d/sshd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: fail2ban_restart_service

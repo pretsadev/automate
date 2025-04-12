@@ -1,0 +1,25 @@
+---
+- name: install netbird client
+  ansible.builtin.import_role:
+    name: package
+  vars:
+    package_id: docker
+    package_add_repo: true
+    package_apt_gpg_key_url: https://pkgs.netbird.io/debian/public.key
+    package_apt_repo_url: https://pkgs.netbird.io/debian
+    package_yum_gpg_key_url: https://pkgs.netbird.io/yum/repodata/repomd.xml.key
+    package_yum_repo_url: https://pkgs.netbird.io/yum/
+    package_name:
+      - netbird
+
+- name: bring netbird up
+  ansible.builtin.command:
+    argv:
+      - netbird
+      - up
+      - --allow-server-ssh
+      - --setup-key
+      - "{{ netbird_client_setup_key }}"
+      - --hostname
+      - "{{ inventory_hostname_short }}"
+

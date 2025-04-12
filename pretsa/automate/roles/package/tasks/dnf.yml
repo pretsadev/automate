@@ -1,0 +1,13 @@
+- name: add package gpg key using dnf- {{ package_id }}
+  ansible.builtin.rpm_key:
+    key: "{{ package_yum_gpg_key_url }}"
+    state: present
+  when: package_add_repo | bool
+
+- name: add package repository using dnf- {{ package_id }}
+  ansible.builtin.yum_repository:
+    name: "{{ package_id }}"
+    description: "{{ package_id }} repository"
+    baseurl: "{{ package_yum_repo_url }}"
+    state: present
+  when: package_add_repo | bool

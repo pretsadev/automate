@@ -1,0 +1,10 @@
+---
+package_id: ""
+package_add_repo: false
+package_apt_gpg_key_url: ""
+package_apt_repo_url: ""
+package_yum_gpg_key_url: ""
+package_yum_repo_url: ""
+package_yum_prerequisite: []
+package_apt_prerequisite: []
+package_name: []
