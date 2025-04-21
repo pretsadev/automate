@@ -3,6 +3,7 @@
   ansible.builtin.user:
     name: "{{ item.user_name }}"
     password: "{{ item.user_password }}"
+    uid: "{{ item.user_id | default(default_user_id)}}"
     shell: "{{ item.user_shell | default(default_user_shell) }}"
     groups: "{{ item.user_groups | default(default_user_groups) }}"
   loop: "{{ users }}"

@@ -14,6 +14,7 @@ Role Variables
 - users: arrays of user with these sub-variables
   - user_name: Name of user
   - user_password: Encoded password
+  - user_id: User ID  (defaults to 1100)
   - user_shell: User shell (defaults to /bin/bash)
   - user_groups: User groups (defaults to users)
   - user_public_keys: arrays of URL for public keys that can SSH as this user

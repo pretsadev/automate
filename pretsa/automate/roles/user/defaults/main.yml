@@ -1,9 +1,11 @@
 ---
+default_user_id: 1100
 default_user_shell: /bin/bash
 default_user_groups: users
 #users:
 #  - user_name: pretsa
 #    user_password:
+#    user_id:
 #    user_shell: /bin/bash
 #    user_groups: users
 #    user_public_keys: []
