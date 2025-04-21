@@ -16,6 +16,7 @@ tags:
 
 dependencies:
   community.general: '>=10.0.0'
+  ansible.posix: '>=1.6.0'
 
 repository: https://github.com/pretsadev/automate
 documentation: https://github.com/pretsadev/automate
