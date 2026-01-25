@@ -1,20 +1,17 @@
 ---
-- name: install docker
-  ansible.builtin.import_role:
-    name: package
-  vars:
-    package_id: docker
-    package_add_repo: true
-    package_apt_gpg_key_url: https://download.docker.com/linux/ubuntu/gpg
-    package_apt_repo_url: https://download.docker.com/linux/ubuntu
-    package_yum_gpg_key_url: https://download.docker.com/linux/rhel/gpg
-    package_yum_repo_url: https://download.docker.com/linux/rhel/$releasever/$basearch/stable
-    package_name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
+- name: install package using zypper
+  import_tasks: zypper.yml
+  when: ansible_facts['os_family']|lower == 'suse'
+  notify: docker_restart_service
+
+- name: install package using dnf
+  import_tasks: dnf.yml
+  when: ansible_facts['os_family']|lower == 'redhat'
+  notify: docker_restart_service
+
+- name: install package using apt
+  import_tasks: dnf.yml
+  when: ansible_facts['os_family']|lower == 'debian'
   notify: docker_restart_service
 
 - name: create override directory

@@ -1,0 +1,12 @@
+- name: add package repository
+  community.general.zypper_repository:
+    name: netbird-repo
+    repo: https://pkgs.netbird.io/yum/
+    auto_import_keys: true
+    state: present
+
+- name: install package
+  community.general.zypper:
+    name:
+      - netbird
+    state: present

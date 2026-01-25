@@ -1,3 +1,6 @@
 ---
 # Required
 #netbird_client_setup_key:
+# Optional
+netbird_management_url: https://api.netbird.io
+netbird_up_extra_flags:

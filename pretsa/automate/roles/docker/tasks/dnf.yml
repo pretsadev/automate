@@ -1,0 +1,21 @@
+- name: add package repository gpg key
+  ansible.builtin.rpm_key:
+    key: https://download.docker.com/linux/rhel/gpg
+    state: present
+
+- name: add package repository
+  ansible.builtin.yum_repository:
+    name: docker
+    description: docker repository
+    baseurl: https://download.docker.com/linux/rhel/$releasever/$basearch/stable
+    state: present
+
+- name: install package
+  ansible.builtin.package:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present

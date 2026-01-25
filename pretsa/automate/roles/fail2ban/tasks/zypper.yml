@@ -1,0 +1,4 @@
+- name: install package
+  community.general.zypper:
+    name: fail2ban
+    state: present

@@ -1,0 +1,17 @@
+- name: add package repository gpg key
+  ansible.builtin.rpm_key:
+    key: https://pkgs.netbird.io/yum/repodata/repomd.xml.key
+    state: present
+
+- name: add package repository
+  ansible.builtin.yum_repository:
+    name: netbird
+    description: netbird repository
+    baseurl: https://pkgs.netbird.io/yum/
+    state: present
+
+- name: install package
+  ansible.builtin.package:
+    name:
+      - netbird
+    state: present

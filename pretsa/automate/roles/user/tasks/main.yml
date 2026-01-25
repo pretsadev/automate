@@ -18,3 +18,13 @@
   loop_control:
     loop_var: user
     label: "{{ user.user_name }}"
+
+- name: enable linger user
+  ansible.builtin.command:
+    cmd: "loginctl enable-linger {{ user.user_name }}"
+    creates: "/var/lib/systemd/linger/{{ user.user_name }}"
+  when: user.user_enable_linger | default(false)
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: "{{ user.user_name }}"

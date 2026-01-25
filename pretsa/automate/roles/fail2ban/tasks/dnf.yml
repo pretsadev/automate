@@ -1,0 +1,9 @@
+- name: install package dependencies
+  ansible.builtin.package:
+    name: epel-release
+    state: present
+
+- name: install package
+  ansible.builtin.package:
+    name: fail2ban
+    state: present

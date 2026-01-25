@@ -9,3 +9,4 @@ default_user_groups: users
 #    user_shell: /bin/bash
 #    user_groups: users
 #    user_public_keys: []
+#    user_enable_linger: true

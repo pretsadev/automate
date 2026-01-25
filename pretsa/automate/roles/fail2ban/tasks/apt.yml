@@ -1,0 +1,4 @@
+- name: install package
+  ansible.builtin.package:
+    name: fail2ban
+    state: present
